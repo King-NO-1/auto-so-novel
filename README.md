@@ -15,7 +15,7 @@
 
 ### 1. 准备
 
-下载 <a href="https://github.com/freeok/so-novel/releases">SoNovel</a>（Windows 版）并解压，然后将本工具放入 SoNovel 根目录：
+下载 <a href="https://github.com/freeok/so-novel/releases">SoNovel</a>（Windows 版）并解压。再下载本工具（<a href="https://github.com/King-NO-1/auto-so-novel">auto-so-novel</a>）并解压，然后将 <code>auto-so-novel</code> 文件夹放入 SoNovel 根目录：
 
 ```
 SoNovel/                     # SoNovel 引擎根目录
