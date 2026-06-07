@@ -56,7 +56,7 @@ python batch_download.py
 
 | 配置项 | 默认值 | 说明 |
 |--------|--------|------|
-| `SONOVEL_DIR` | 自动查找 | SoNovel 目录，查找顺序：`--sonovel-dir` > `SONOVEL_DIR` 环境变量 > 项目内 `SoNovel/` |
+| `SONOVEL_DIR` | 自动查找 | SoNovel 目录，查找顺序：`--sonovel-dir` > `SONOVEL_DIR` 环境变量 > 项目内 `SoNovel/` > 父目录自动搜索 |
 | `BOOK_TIMEOUT` | `180`（秒） | 单本下载超时 |
 | `FORMAT` | `txt` | 下载格式 |
 | `SEARCH_LIMIT` | `3` | 搜索匹配条数上限 |

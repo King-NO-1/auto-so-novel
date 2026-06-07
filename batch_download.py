@@ -45,7 +45,7 @@ BOOK_FILE = os.path.join(PROJECT_DIR, "books.txt")
 
 # SoNovel 路径（指向安装目录，自动查找）
 def resolve_sonovel_dir():
-    """按优先级查找 SoNovel 目录：--sonovel-dir > SONOVEL_DIR > 项目内 SoNovel/"""
+    """按优先级查找 SoNovel 目录：--sonovel-dir > SONOVEL_DIR > 项目内 SoNovel/ > 向上搜索"""
     # 1. 命令行参数 --sonovel-dir (支持 = 号和空格两种写法)
     raw_args = sys.argv[1:]  # 跳过脚本名
     for arg in raw_args:
@@ -64,8 +64,21 @@ def resolve_sonovel_dir():
     env_dir = os.environ.get("SONOVEL_DIR")
     if env_dir:
         return os.path.abspath(env_dir)
-    # 3. 默认：脚本所在目录下的 SoNovel/
-    return os.path.join(PROJECT_DIR, "SoNovel")
+    # 3. 项目内 SoNovel/（用户主动放入的，优先级最高）
+    embedded = os.path.join(PROJECT_DIR, "SoNovel")
+    if os.path.isfile(os.path.join(embedded, "app.jar")):
+        return embedded
+    # 4. 向上找：脚本可能在 SoNovel 的子目录里（如 SoNovel/auto-so-novel/）
+    current = os.path.abspath(PROJECT_DIR)
+    for _ in range(3):
+        parent = os.path.dirname(current)
+        if parent == current:  # 到根目录了
+            break
+        if os.path.isfile(os.path.join(parent, "app.jar")):
+            return parent
+        current = parent
+    # 5. 默认（不存在也没关系，main() 里会验证报错）
+    return embedded
 
 SONOVEL_DIR = resolve_sonovel_dir()
 JAVA_EXE = os.path.join(SONOVEL_DIR, "runtime", "bin", "java.exe")
