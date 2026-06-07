@@ -15,11 +15,7 @@
 
 ### 1. 准备
 
-确保已安装 <a href="https://github.com/freeok/so-novel">SoNovel</a>，并安装 Python 依赖：
-
-```bash
-pip install requests
-```
+确保已安装 <a href="https://github.com/freeok/so-novel">SoNovel</a>。
 
 ### 2. 编辑书名
 
