@@ -1,13 +1,12 @@
 <div align="center">
   <h1>📚 auto-so-novel</h1>
-  <p><strong>SoNovel WebUI API 批量下载客户端</strong></p>
+  <p>自动下载小说——把书名写在 <code>books.txt</code> 里，一键批量下载。</p>
   <p>
-    <img src="https://img.shields.io/badge/python-3.8%2B-blue?style=flat-square&logo=python">
     <img src="https://img.shields.io/badge/status-stable-green?style=flat-square">
     <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square">
   </p>
-  <p>把书名写在 <code>books.txt</code> 里，自动搜索→匹配→下载，一套走完。</p>
-  <p>🚀 基于 <a href="https://github.com/freeok/so-novel"><strong>so-novel</strong></a> 的 WebUI API 封装</p>
+  <p>🙏 本脚本使用 <a href="https://github.com/freeok/so-novel"><strong>so-novel</strong></a> 的 WebUI API 实现下载，<br>感谢 so-novel 优秀的开源小说下载引擎。</p>
+  <p>⚠️ <strong>so-novel 搜不到的书，本工具也没办法。</strong></p>
 </div>
 
 ---
@@ -16,7 +15,7 @@
 
 ### 1. 准备
 
-确保已安装 [SoNovel](https://github.com/freeok/so-novel) 和 Python 3.8+：
+确保已安装 <a href="https://github.com/freeok/so-novel">SoNovel</a>，并安装 Python 依赖：
 
 ```bash
 pip install requests
