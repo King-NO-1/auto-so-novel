@@ -1,0 +1,8 @@
+# 运行时生成
+logs/
+batch_skip_history.json
+__pycache__/
+*.pyc
+
+# SoNovel 目录
+# (SoNovel 本体不在此项目内，脚本通过路径引用它)
