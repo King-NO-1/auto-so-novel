@@ -4,7 +4,7 @@ auto_so_novel — SoNovel 批量下载脚本
 
 用法:
   1. 在 books.txt 列出书名（每行一本）
-  2. python batch_download.py
+  2. 双击 启动.bat
 
 依赖:
   - SoNovel (https://github.com/freeok/so-novel) 已安装
@@ -54,7 +54,11 @@ def resolve_sonovel_dir():
     try:
         idx = raw_args.index("--sonovel-dir")
         if idx + 1 < len(raw_args):
-            return os.path.abspath(raw_args[idx + 1])
+            val = raw_args[idx + 1]
+            if val.startswith("--"):
+                print("错误: --sonovel-dir 后缺少路径参数", flush=True)
+                sys.exit(1)
+            return os.path.abspath(val)
         else:
             print("错误: --sonovel-dir 后缺少路径参数", flush=True)
             sys.exit(1)
@@ -68,14 +72,19 @@ def resolve_sonovel_dir():
     embedded = os.path.join(PROJECT_DIR, "SoNovel")
     if os.path.isfile(os.path.join(embedded, "app.jar")):
         return embedded
-    # 4. 向上找：脚本可能在 SoNovel 的子目录里（如 SoNovel/auto-so-novel/）
+    # 4. 向上找 + 平级 SoNovel/ 目录
     current = os.path.abspath(PROJECT_DIR)
     for _ in range(3):
         parent = os.path.dirname(current)
         if parent == current:  # 到根目录了
             break
+        # 检查父目录本身（项目放在 SoNovel 里面）
         if os.path.isfile(os.path.join(parent, "app.jar")):
             return parent
+        # 检查父目录下的 SoNovel/（项目与 SoNovel 平级）
+        parent_sonovel = os.path.join(parent, "SoNovel")
+        if os.path.isfile(os.path.join(parent_sonovel, "app.jar")):
+            return parent_sonovel
         current = parent
     # 5. 默认（不存在也没关系，main() 里会验证报错）
     return embedded

@@ -42,11 +42,7 @@ SoNovel/                     # SoNovel 引擎根目录
 
 ### 3. 运行
 
-双击 `启动.bat`，或在终端进入本项目目录运行：
-
-```bash
-python batch_download.py
-```
+双击 `启动.bat`。
 
 脚本自动完成：清理残留进程 → 启用 WebUI → 启动 SoNovel → 逐本搜索下载 → 恢复配置。
 
@@ -61,12 +57,6 @@ python batch_download.py
 | `FORMAT` | `txt` | 下载格式 |
 | `SEARCH_LIMIT` | `3` | 搜索匹配条数上限 |
 | `SKIP_THRESHOLD` | `1` | 连续搜索失败 N 次后永久跳过 |
-
-### 命令行参数
-
-```
-python batch_download.py --sonovel-dir D:\path\to\SoNovel
-```
 
 ## 📌 依赖
 
