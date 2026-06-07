@@ -65,4 +65,4 @@ SoNovel/                     # SoNovel 引擎根目录
 
 ## 📄 许可证
 
-MIT
+[MIT](LICENSE)
