@@ -42,6 +42,8 @@ auto-so-novel/
 
 ### 3. 运行
 
+在终端进入本项目目录，运行：
+
 ```bash
 python batch_download.py
 ```
