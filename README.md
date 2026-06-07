@@ -15,17 +15,17 @@
 
 ### 1. 准备
 
-下载 <a href="https://github.com/freeok/so-novel/releases">SoNovel</a>（Windows 版），解压后放入本项目目录下的 <code>SoNovel/</code> 文件夹：
+下载 <a href="https://github.com/freeok/so-novel/releases">SoNovel</a>（Windows 版）并解压，然后将本工具放入 SoNovel 根目录：
 
 ```
-auto-so-novel/
-├── SoNovel/              # ← 你把 SoNovel 放这里
-│   ├── app.jar
-│   ├── config.ini
-│   ├── runtime/
-│   └── ...
-├── batch_download.py
-└── books.txt
+SoNovel/                     # SoNovel 引擎根目录
+├── app.jar
+├── config.ini
+├── runtime/
+├── downloads/
+└── auto-so-novel/           # ← 把整个文件夹放这里
+    ├── batch_download.py
+    └── books.txt
 ```
 
 > 也可通过环境变量 <code>SONOVEL_DIR</code> 或运行参数 <code>--sonovel-dir &lt;路径&gt;</code> 指定 SoNovel 位置。
@@ -66,23 +66,6 @@ python batch_download.py
 
 ```
 python batch_download.py --sonovel-dir D:\path\to\SoNovel
-```
-
-## 📁 文件说明
-
-```
-auto-so-novel/
-├── SoNovel/                   # SoNovel 引擎（你放入）
-│   ├── app.jar
-│   ├── config.ini
-│   ├── runtime/
-│   └── downloads/             # 📥 下载文件存放在这里
-├── batch_download.py          # 主脚本
-├── books.txt                  # 📝 你编辑这个——书名列表
-├── README.md                  # 本文件
-├── batch_skip_history.json    # 跳过历史（自动维护）
-├── logs/                      # 运行日志（自动生成）
-└── .gitignore
 ```
 
 ## 📌 依赖
