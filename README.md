@@ -7,6 +7,7 @@
     <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square">
   </p>
   <p>把书名写在 <code>books.txt</code> 里，自动搜索→匹配→下载，一套走完。</p>
+  <p>🚀 基于 <a href="https://github.com/freeok/so-novel"><strong>so-novel</strong></a> 的 WebUI API 封装</p>
 </div>
 
 ---
