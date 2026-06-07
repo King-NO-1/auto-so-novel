@@ -42,7 +42,7 @@ SoNovel/                     # SoNovel 引擎根目录
 
 ### 3. 运行
 
-在终端进入本项目目录，运行：
+双击 `启动.bat`，或在终端进入本项目目录运行：
 
 ```bash
 python batch_download.py
