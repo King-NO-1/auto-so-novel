@@ -28,7 +28,6 @@ import subprocess
 import configparser
 import threading
 import json
-from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 
 # Windows 终端强制 UTF-8
@@ -54,9 +53,6 @@ JAVA_LOG = os.path.join(SONOVEL_DIR, "logs", "webui-server.log")
 
 # 脚本自身日志目录（项目目录下）
 LOG_DIR = os.path.join(PROJECT_DIR, "logs")
-
-# 并发数（同时下载几本，建议 1）
-MAX_WORKERS = 1
 
 # 下载格式
 FORMAT = "txt"
@@ -536,7 +532,7 @@ def main():
     log(f"书目文件: {BOOK_FILE}")
 
     books, source = load_book_list()
-    log(f"书名数量: {len(books)} | 并发: {MAX_WORKERS} | 格式: {FORMAT}")
+    log(f"书名数量: {len(books)} | 格式: {FORMAT}")
     for i, name in enumerate(books, 1):
         log(f"  {i}. {name}")
 
@@ -598,27 +594,22 @@ def main():
         stop_java(state["proc"], state["config_changed"])
         sys.exit(1)
 
-    # 并发下载
+    # 逐本下载
     success = 0
     fail = 0
     failed_books = []
 
-    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:
-        futures = {}
-        for name in pending_books:
-            futures[pool.submit(download_one, client, name)] = name
-        for future in as_completed(futures):
-            name = futures[future]
-            try:
-                if future.result():
-                    success += 1
-                else:
-                    fail += 1
-                    failed_books.append(name)
-            except Exception as e:
-                log(f"[异常] {name}: {e}")
+    for name in pending_books:
+        try:
+            if download_one(client, name):
+                success += 1
+            else:
                 fail += 1
                 failed_books.append(name)
+        except Exception as e:
+            log(f"[异常] {name}: {e}")
+            fail += 1
+            failed_books.append(name)
 
     log(f"{'='*50}")
     log(f"完成! 成功: {success} | 失败: {fail}")
