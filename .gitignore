@@ -4,5 +4,5 @@ batch_skip_history.json
 __pycache__/
 *.pyc
 
-# SoNovel 目录
-# (SoNovel 本体不在此项目内，脚本通过路径引用它)
+# SoNovel 引擎（用户自行下载放入）
+SoNovel/

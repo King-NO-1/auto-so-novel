@@ -43,8 +43,31 @@ PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 # 书名文件路径（每行一个书名，与脚本同目录）
 BOOK_FILE = os.path.join(PROJECT_DIR, "books.txt")
 
-# SoNovel 路径（指向安装目录）
-SONOVEL_DIR = r"D:\Download\sonovel-windows\SoNovel"
+# SoNovel 路径（指向安装目录，自动查找）
+def resolve_sonovel_dir():
+    """按优先级查找 SoNovel 目录：--sonovel-dir > SONOVEL_DIR > 项目内 SoNovel/"""
+    # 1. 命令行参数 --sonovel-dir (支持 = 号和空格两种写法)
+    raw_args = sys.argv[1:]  # 跳过脚本名
+    for arg in raw_args:
+        if arg.startswith("--sonovel-dir="):
+            return os.path.abspath(arg.split("=", 1)[1])
+    try:
+        idx = raw_args.index("--sonovel-dir")
+        if idx + 1 < len(raw_args):
+            return os.path.abspath(raw_args[idx + 1])
+        else:
+            print("错误: --sonovel-dir 后缺少路径参数", flush=True)
+            sys.exit(1)
+    except ValueError:
+        pass
+    # 2. 环境变量 SONOVEL_DIR
+    env_dir = os.environ.get("SONOVEL_DIR")
+    if env_dir:
+        return os.path.abspath(env_dir)
+    # 3. 默认：脚本所在目录下的 SoNovel/
+    return os.path.join(PROJECT_DIR, "SoNovel")
+
+SONOVEL_DIR = resolve_sonovel_dir()
 JAVA_EXE = os.path.join(SONOVEL_DIR, "runtime", "bin", "java.exe")
 APP_JAR = os.path.join(SONOVEL_DIR, "app.jar")
 CONFIG_INI = os.path.join(SONOVEL_DIR, "config.ini")
@@ -529,6 +552,22 @@ def cleanup_outer():
 def main():
     """主入口"""
     log(f"auto_so_novel — SoNovel 批量下载 v4")
+    log(f"SoNovel 目录: {SONOVEL_DIR}")
+    if not os.path.isdir(SONOVEL_DIR):
+        log(f"错误: 未找到 SoNovel 目录: {SONOVEL_DIR}")
+        log(f"解决方法:")
+        log(f"  1. 将 SoNovel 解压到本项目目录下的 SoNovel/ 文件夹")
+        log(f"  2. 或设置环境变量 SONOVEL_DIR")
+        log(f"  3. 或运行: python batch_download.py --sonovel-dir <SoNovel路径>")
+        log_file.close()
+        sys.exit(1)
+    missing = [p for p in [APP_JAR, JAVA_EXE] if not os.path.isfile(p)]
+    if missing:
+        log(f"错误: SoNovel 目录缺少必要文件:")
+        for p in missing:
+            log(f"  - {p}")
+        log_file.close()
+        sys.exit(1)
     log(f"书目文件: {BOOK_FILE}")
 
     books, source = load_book_list()

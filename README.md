@@ -15,7 +15,20 @@
 
 ### 1. 准备
 
-确保已安装 <a href="https://github.com/freeok/so-novel">SoNovel</a>。
+下载 <a href="https://github.com/freeok/so-novel/releases">SoNovel</a>（Windows 版），解压后放入本项目目录下的 <code>SoNovel/</code> 文件夹：
+
+```
+auto-so-novel/
+├── SoNovel/              # ← 你把 SoNovel 放这里
+│   ├── app.jar
+│   ├── config.ini
+│   ├── runtime/
+│   └── ...
+├── batch_download.py
+└── books.txt
+```
+
+> 也可通过环境变量 <code>SONOVEL_DIR</code> 或运行参数 <code>--sonovel-dir &lt;路径&gt;</code> 指定 SoNovel 位置。
 
 ### 2. 编辑书名
 
@@ -41,25 +54,34 @@ python batch_download.py
 
 | 配置项 | 默认值 | 说明 |
 |--------|--------|------|
-| `SONOVEL_DIR` | `D:\Download\sonovel-windows\SoNovel` | SoNovel 安装目录 |
+| `SONOVEL_DIR` | 自动查找 | SoNovel 目录，查找顺序：`--sonovel-dir` > `SONOVEL_DIR` 环境变量 > 项目内 `SoNovel/` |
 | `BOOK_TIMEOUT` | `180`（秒） | 单本下载超时 |
 | `FORMAT` | `txt` | 下载格式 |
 | `SEARCH_LIMIT` | `3` | 搜索匹配条数上限 |
 | `SKIP_THRESHOLD` | `1` | 连续搜索失败 N 次后永久跳过 |
 
+### 命令行参数
+
+```
+python batch_download.py --sonovel-dir D:\path\to\SoNovel
+```
+
 ## 📁 文件说明
 
 ```
 auto-so-novel/
-├── batch_download.py        # 主脚本
-├── books.txt                # 📝 你编辑这个——书名列表
-├── README.md                # 本文件
-├── batch_skip_history.json  # 跳过历史（自动维护）
-├── logs/                    # 运行日志（自动生成）
+├── SoNovel/                   # SoNovel 引擎（你放入）
+│   ├── app.jar
+│   ├── config.ini
+│   ├── runtime/
+│   └── downloads/             # 📥 下载文件存放在这里
+├── batch_download.py          # 主脚本
+├── books.txt                  # 📝 你编辑这个——书名列表
+├── README.md                  # 本文件
+├── batch_skip_history.json    # 跳过历史（自动维护）
+├── logs/                      # 运行日志（自动生成）
 └── .gitignore
 ```
-
-下载的文件存放在 `{SONOVEL_DIR}/downloads/` 下。
 
 ## 📌 依赖
 
