@@ -1,68 +1,149 @@
 <div align="center">
-  <h1>📚 auto-so-novel</h1>
-  <p>自动下载小说——把书名写在 <code>books.txt</code> 里，一键批量下载。</p>
+  <h1>📚 auto-so-novel — 小说批量下载工具</h1>
   <p>
+    <strong>免费 · 开源 · 自动化 · 无需手动操作</strong>
+  </p>
+  <p>
+    一款基于 <a href="https://github.com/freeok/so-novel">so-novel</a> 引擎的<strong>小说批量下载工具</strong>，<br>
+    把书名写在 <code>books.txt</code> 里，一键<strong>批量下载小说</strong>到本地。<br>
+    支持 <strong>网络小说 免费下载</strong>，自动搜索、匹配、下载全流程。
+  </p>
+  <p>
+    <img src="https://img.shields.io/badge/language-Python-blue?style=flat-square">
     <img src="https://img.shields.io/badge/status-stable-green?style=flat-square">
     <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square">
   </p>
-  <p>🙏 本脚本使用 <a href="https://github.com/freeok/so-novel"><strong>so-novel</strong></a> 的 WebUI API 实现下载，<br>感谢 so-novel 优秀的开源小说下载引擎。</p>
-  <p>⚠️ <strong>so-novel 搜不到的书，本工具也没办法。</strong></p>
+  <hr>
+  <p>
+    <strong>English:</strong> Batch novel downloader · Chinese novel download tool ·<br>
+    Auto download web novels from multiple sources with one click.
+  </p>
 </div>
 
 ---
 
-## 📋 使用
+## ✨ 功能特点
 
-### 1. 准备
+- **📥 小说批量下载** — 支持多本小说一键批量下载，把书名写进 `books.txt` 即可
+- **🤖 全自动化流程** — 自动启动 so-novel 引擎 → 搜索书籍 → 书名匹配 → 下载完成，无需人工干预
+- **🔍 智能书名匹配** — 搜索结果自动做模糊匹配，多个结果取最新更新版本
+- **⏱️ 可配置超时** — 单本下载超时、搜索失败跳过阈值均可自定义
+- **📄 支持 TXT 格式下载** — 下载为纯文本格式，适合各种阅读器
+- **🔄 自动跳过已下载** — 扫描下载目录，已经下载过的书自动跳过
+- **📝 错误重试与跳过** — 连续搜索失败达到阈值后自动跳过，不影响后续书籍
+- **📊 控制台日志 + 文件日志** — 实时查看进度，日志同时写入文件方便排查
+- **🪟 Windows 友好** — 提供 `启动.bat`，双击即可运行
 
-下载 <a href="https://github.com/freeok/so-novel/releases">SoNovel</a>（Windows 版）并解压。再下载本工具（<a href="https://github.com/King-NO-1/auto-so-novel">auto-so-novel</a>）并解压，然后将 <code>auto-so-novel</code> 文件夹放入 SoNovel 根目录：
+## 🚀 快速开始
+
+### 完整下载流程
 
 ```
-SoNovel/                     # SoNovel 引擎根目录
-├── app.jar
-├── config.ini
-├── runtime/
-├── downloads/
-└── auto-so-novel/           # ← 把整个文件夹放这里
-    ├── batch_download.py
-    └── books.txt
+books.txt → auto-so-novel → so-novel 引擎 → 搜索 → 匹配 → 下载 → downloads/ 目录
 ```
 
-> 也可通过环境变量 <code>SONOVEL_DIR</code> 或运行参数 <code>--sonovel-dir &lt;路径&gt;</code> 指定 SoNovel 位置。
+### 第一步：准备环境
 
-### 2. 编辑书名
+1. 下载 **so-novel**（小说下载引擎）：[so-novel Releases](https://github.com/freeok/so-novel/releases)
+2. 下载本工具 **auto-so-novel**：[点击下载](https://github.com/King-NO-1/auto-so-novel)
+3. 将 `auto-so-novel` 文件夹放入 `SoNovel` 根目录：
 
-打开 `books.txt`，每行一个书名：
+```
+SoNovel/                     # so-novel 引擎根目录
+├── app.jar                  # so-novel 主程序
+├── config.ini               # so-novel 配置文件
+├── runtime/                 # Java 运行时
+├── downloads/               # 小说下载输出目录
+└── auto-so-novel/           # ← 本工具放这里
+    ├── batch_download.py    # 批量下载脚本
+    ├── books.txt            # 书名单
+    └── 启动.bat             # Windows 一键启动
+```
+
+> 也可通过环境变量 `SONOVEL_DIR` 或运行参数 `--sonovel-dir <路径>` 指定 so-novel 位置。
+
+### 第二步：编辑书单
+
+打开 `books.txt`，每行写一本小说名称：
 
 ```
 斗罗大陆
 全职高手
 诡秘之主
+庆余年
+大奉打更人
 ```
 
-### 3. 运行
+### 第三步：一键运行
 
-双击 `启动.bat`。
+**Windows 用户：** 双击 `启动.bat`
 
-脚本自动完成：清理残留进程 → 启用 WebUI → 启动 SoNovel → 逐本搜索下载 → 恢复配置。
+**命令行用户：**
+```bash
+python batch_download.py
+```
 
-## ⚙️ 配置
+脚本自动完成：
+1. 清理残留的 so-novel 进程
+2. 启用 WebUI 模式
+3. 启动 so-novel 引擎
+4. 逐本搜索并下载小说
+5. 完成后清理进程、恢复配置
+
+## ⚙️ 配置说明
 
 打开 `batch_download.py`，顶部配置区可直接修改：
 
 | 配置项 | 默认值 | 说明 |
 |--------|--------|------|
-| `SONOVEL_DIR` | 自动查找 | SoNovel 目录，查找顺序：`--sonovel-dir` > `SONOVEL_DIR` 环境变量 > 项目内 `SoNovel/` > 父目录自动搜索 |
-| `BOOK_TIMEOUT` | `180`（秒） | 单本下载超时 |
-| `FORMAT` | `txt` | 下载格式 |
-| `SEARCH_LIMIT` | `3` | 搜索匹配条数上限 |
+| `BOOK_TIMEOUT` | `180`（秒） | 单本小说下载超时时间 |
+| `FORMAT` | `txt` | 小说下载格式 |
+| `SEARCH_LIMIT` | `3` | 搜索结果匹配条数上限 |
 | `SKIP_THRESHOLD` | `1` | 连续搜索失败 N 次后永久跳过 |
+
+### 指定 so-novel 路径（三种方式）
+
+1. **目录结构法**（推荐）：将 `auto-so-novel` 放在 `SoNovel/` 根目录下
+2. **环境变量**：设置 `SONOVEL_DIR` 指向 so-novel 目录
+3. **命令行参数**：`python batch_download.py --sonovel-dir D:/SoNovel`
+
+## 📖 小说下载来源
+
+本工具本身不提供小说内容，而是通过 so-novel 引擎聚合多个小说网站的公开内容。支持搜索和下载的网络小说覆盖：
+
+- 玄幻小说 / 仙侠小说
+- 都市小说 / 言情小说
+- 悬疑小说 / 科幻小说
+- 历史小说 / 网游小说
+- 免费小说 / 完本小说
+- 各类中文网络小说
+
+> ⚠️ so-novel 搜不到的书，本工具也没办法下载。
 
 ## 📌 依赖
 
-- [SoNovel](https://github.com/freeok/so-novel) — 小说下载引擎（Java）
-- Python 3.8+, [requests](https://pypi.org/project/requests/)
+- **[so-novel](https://github.com/freeok/so-novel)** — 开源小说下载引擎（Java）
+- **Python 3.8+** — 脚本运行环境
+- **[requests](https://pypi.org/project/requests/)** — HTTP 请求库
+
+```bash
+pip install requests
+```
+
+## 🏷️ 关键词
+
+`小说下载` `批量下载小说` `网络小说下载` `免费小说下载工具` `小说爬虫` `novel download` `batch novel downloader` `Chinese novel downloader` `web novel scraper` `novel batch download` `免费下载小说` `小说采集工具` `整本小说下载` `小说下载器`
 
 ## 📄 许可证
 
 [MIT](LICENSE)
+
+---
+
+<div align="center">
+  <p>⭐ 觉得好用的话点个 Star，让更多人找到这个小说下载工具</p>
+  <p>
+    <a href="https://github.com/King-NO-1/auto-so-novel">GitHub</a> ·
+    <a href="https://github.com/freeok/so-novel/releases">下载 SoNovel</a>
+  </p>
+</div>
