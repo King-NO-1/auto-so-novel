@@ -41,15 +41,15 @@ books.txt → auto-so-novel → so-novel 引擎 → 搜索 → 匹配 → 下载
 3. 将 `auto-so-novel` 文件夹放入 `SoNovel` 根目录：
 
 ```
-SoNovel/                     # so-novel 引擎根目录
-├── app.jar                  # so-novel 主程序
-├── config.ini               # so-novel 配置文件
-├── runtime/                 # Java 运行时
-├── downloads/               # 小说下载输出目录
+SoNovel/                 
+├── app.jar                
+├── config.ini              
+├── runtime/                 
+├── downloads/             
 └── auto-so-novel/           # ← 本工具放这里
-    ├── batch_download.py    # 批量下载脚本
-    ├── books.txt            # 书名单
-    └── 启动.bat             # Windows 一键启动
+    ├── batch_download.py   
+    ├── books.txt         
+    └── 启动.bat           
 ```
 
 > 也可通过环境变量 `SONOVEL_DIR` 或运行参数 `--sonovel-dir <路径>` 指定 so-novel 位置。
@@ -70,11 +70,6 @@ SoNovel/                     # so-novel 引擎根目录
 
 **Windows 用户：** 双击 `启动.bat`
 
-**命令行用户：**
-```bash
-python batch_download.py
-```
-
 脚本自动完成：
 1. 清理残留的 so-novel 进程
 2. 启用 WebUI 模式
@@ -92,23 +87,6 @@ python batch_download.py
 | `FORMAT` | `txt` | 小说下载格式 |
 | `SEARCH_LIMIT` | `3` | 搜索结果匹配条数上限 |
 | `SKIP_THRESHOLD` | `1` | 连续搜索失败 N 次后永久跳过 |
-
-### 指定 so-novel 路径（三种方式）
-
-1. **目录结构法**（推荐）：将 `auto-so-novel` 放在 `SoNovel/` 根目录下
-2. **环境变量**：设置 `SONOVEL_DIR` 指向 so-novel 目录
-3. **命令行参数**：`python batch_download.py --sonovel-dir D:/SoNovel`
-
-## 📖 小说下载来源
-
-本工具本身不提供小说内容，而是通过 so-novel 引擎聚合多个小说网站的公开内容。支持搜索和下载的网络小说覆盖：
-
-- 玄幻小说 / 仙侠小说
-- 都市小说 / 言情小说
-- 悬疑小说 / 科幻小说
-- 历史小说 / 网游小说
-- 免费小说 / 完本小说
-- 各类中文网络小说
 
 > ⚠️ so-novel 搜不到的书，本工具也没办法下载。
 
